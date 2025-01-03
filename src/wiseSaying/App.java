@@ -1,6 +1,6 @@
-package wiseSaying;
 
-import com.sun.source.tree.IfTree;
+
+package wiseSaying;
 
 import java.util.ArrayList;
 import java.util.List;

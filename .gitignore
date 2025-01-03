@@ -30,3 +30,7 @@ bin/
 
 .idea
 Dev.iml
+build.gradle
+.gradle
+gradlew
+gradlew.bat
