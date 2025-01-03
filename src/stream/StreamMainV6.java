@@ -13,6 +13,7 @@ public class StreamMainV6 {
                 .toArray(String[]::new);
         // Object[] array 배열로 리턴되니까, toArray에 String[]::new 를 추가해 주면
         // String[] 로 리턴해 준다.
+        // 스트림을 특정 타입의 배열로 변환하기 위해 toArray에 배열 생성자를 이용
         Arrays.stream(array).forEach(System.out::println);
 
 
