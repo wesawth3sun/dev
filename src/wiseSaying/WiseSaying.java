@@ -22,4 +22,12 @@ public class WiseSaying {
     public String getAutuor() {
         return autuor;
     }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setAutuor(String autuor) {
+        this.autuor = autuor;
+    }
 }
