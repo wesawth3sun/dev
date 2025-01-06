@@ -6,19 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static wiseSaying.Service.lastId;
-
 public class App {
-    private final Scanner scanner;
     List<WiseSaying> list = new ArrayList<>();
     private final Controller controller;
-    private final Service service;
+    private final Scanner scanner;
 
-    public App(Controller controller) {
-        this.service = new Service();
-        this.scanner = new Scanner(System.in);
+    public App(Controller controller, Scanner scanner) {
         this.controller = controller;
-
+        this.scanner = scanner;
     }
 
     public void run() {
@@ -33,7 +28,7 @@ public class App {
                 System.out.println("명언 앱을 종료합니다.");
                 break;
             } else if (command.equals("등록")) {
-                controller.write(scanner);
+                controller.write();
             } else if (command.equals("목록")) {
                 controller.print();
             } else if (command.startsWith("삭제?id=")) {
@@ -41,7 +36,7 @@ public class App {
                 controller.removeForId(id);
             } else if (command.startsWith("수정?id=")) {
                 int id = Integer.parseInt(command.substring(6));
-                controller.modify(id, scanner);
+                controller.modify(id);
             }
         }
     }

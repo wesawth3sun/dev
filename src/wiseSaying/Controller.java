@@ -4,20 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static wiseSaying.Service.lastId;
-
 public class Controller {
 
-    private final Scanner scanner;
     private final Service service;
+    private final Repository repository;
+    private final Scanner scanner;
 
-    public Controller(Scanner scanner, Service service) {
-        this.scanner = scanner;
+
+    public Controller(Service service, Repository repository, Scanner scanner) {
         this.service = service;
+        this.repository = repository;
+        this.scanner = scanner;
     }
 
 
-    public void modify(int id, Scanner scanner) {
+    public void modify(int id) {
         //WiseSaying wiseSaying = list.get(id);
         //인덱스와 id 값이 같지 않아서 이렇게는 가져오면 안 된다
         WiseSaying wiseSaying = service.findById(id);
@@ -52,7 +53,7 @@ public class Controller {
         }
     }
 
-    public void write(Scanner scanner) {
+    public void write() {
         System.out.print("명언: ");
         String content = scanner.nextLine();
 
@@ -67,7 +68,7 @@ public class Controller {
         for (int i = 0; i < list.size(); i++) {
             WiseSaying wiseSaying = list.get(i);
             if (wiseSaying.getId() == id) {
-                service.delete(i);
+                service.delete(wiseSaying);
                 System.out.println(id + "번 명언이 삭제되었습니다.");
                 return;
                 //메서드를 즉시 종료
