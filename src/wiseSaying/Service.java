@@ -1,8 +1,9 @@
 package wiseSaying;
 
-import java.util.ArrayList;
+import wiseSaying.repo.MemoryRepository;
+import wiseSaying.repo.Repository;
+
 import java.util.List;
-import java.util.Scanner;
 
 public class Service {
 

@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class App {
-    List<WiseSaying> list = new ArrayList<>();
     private final Controller controller;
     private final Scanner scanner;
 

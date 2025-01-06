@@ -1,19 +1,19 @@
 package wiseSaying;
 
-import java.util.ArrayList;
+import wiseSaying.repo.MemoryRepository;
+import wiseSaying.repo.Repository;
+
 import java.util.List;
 import java.util.Scanner;
 
 public class Controller {
 
     private final Service service;
-    private final Repository repository;
     private final Scanner scanner;
 
 
-    public Controller(Service service, Repository repository, Scanner scanner) {
+    public Controller(Service service, Scanner scanner) {
         this.service = service;
-        this.repository = repository;
         this.scanner = scanner;
     }
 

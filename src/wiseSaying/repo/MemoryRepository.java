@@ -1,9 +1,11 @@
-package wiseSaying;
+package wiseSaying.repo;
+
+import wiseSaying.WiseSaying;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Repository {
+public class MemoryRepository implements Repository {
 
     private List<WiseSaying> list = new ArrayList<>();
     public static int lastId = 1;
