@@ -4,26 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static wiseSaying.Service.lastId;
+
 public class Controller {
 
     private final Scanner scanner;
-    private int lastId = 1;
-    private List<WiseSaying> list = new ArrayList<>();
+    private final Service service;
 
-    public Controller(Scanner scanner) {
+    public Controller(Scanner scanner, Service service) {
         this.scanner = scanner;
-    }
-
-    public void firstSet() {
-        list.add(new WiseSaying(lastId++, "즐길 수 없으면 피해라", "작자 미상"));
-        list.add(new WiseSaying(lastId++, "행복해서 웃는 게 아니다... 웃어서 행복한 거다...", "작자 미상"));
+        this.service = service;
     }
 
 
-    public void modify(List<WiseSaying> list, int id, Scanner scanner) {
+    public void modify(int id, Scanner scanner) {
         //WiseSaying wiseSaying = list.get(id);
         //인덱스와 id 값이 같지 않아서 이렇게는 가져오면 안 된다
-        WiseSaying wiseSaying = findById(list, id);
+        WiseSaying wiseSaying = service.findById(id);
         if (wiseSaying == null) {
             System.out.println(id + " 번 명언은 존재하지 않습니다.");
             return;
@@ -32,37 +29,45 @@ public class Controller {
         System.out.println("기존 명언: " + wiseSaying.getContent());
         System.out.print("수정 명언: ");
         String newContent = scanner.nextLine().trim();
-        if (!newContent.isEmpty()) {
-            wiseSaying.setContent(newContent);
-        }
         //문자열의 앞뒤 공백을 제거
         //사용자가 아무것도 입력하지 않고 엔터만 친 경우, 사용자가 공백만 입력하고 엔터를 친 경우
         //둘 다 값을 바꾸지 않기 위해서 trim() 메서드 추가
 
-        System.out.println("기존 작가: " + wiseSaying.getAutuor());
+        System.out.println("기존 작가: " + wiseSaying.getAuthor());
         System.out.print("수정 작가: ");
         String newAuthor = scanner.nextLine().trim();
-        if (!newAuthor.isEmpty()) {
-            wiseSaying.setAutuor(newAuthor);
-        }
-        wiseSaying.setAutuor(newAuthor);
+
+        service.update(wiseSaying, newContent, newAuthor);
         System.out.println(id + " 번 명언이 수정되었습니다.");
+
     }
 
-    public WiseSaying findById(List<WiseSaying> list, int id) {
-        for (WiseSaying wiseSaying : list) {
-            if (wiseSaying.getId() == id) {
-                return wiseSaying;
-            }
+    public void print() {
+        System.out.println("번호 / 작가 / 명언");
+        System.out.println("-------------------");
+        for (WiseSaying wiseSaying : service.getList().reversed()) {
+            System.out.println(wiseSaying.getId() + " / "
+                    + wiseSaying.getContent() + " / "
+                    + wiseSaying.getAuthor());
         }
-        return null;
     }
 
-    public void removeForId(List<WiseSaying> list, int id) {
+    public void write(Scanner scanner) {
+        System.out.print("명언: ");
+        String content = scanner.nextLine();
+
+        System.out.print("작가: ");
+        String author = scanner.nextLine();
+
+        service.add(content, author);
+    }
+
+    public void removeForId(int id) {
+        List<WiseSaying> list = service.getList();
         for (int i = 0; i < list.size(); i++) {
             WiseSaying wiseSaying = list.get(i);
             if (wiseSaying.getId() == id) {
-                list.remove(i);
+                service.delete(i);
                 System.out.println(id + "번 명언이 삭제되었습니다.");
                 return;
                 //메서드를 즉시 종료
@@ -79,39 +84,8 @@ public class Controller {
 
     //인덱스 기반 순회를 사용하면 직접 리스트의 인덱스를 제어, 요소 제거 후 리스트 크기가 자동으로 조정
 
-    public int addWiseSaying(Scanner scanner, List<WiseSaying> list, int lastId) {
-        System.out.print("명언: ");
-        String content = scanner.nextLine();
-
-        System.out.print("작가: ");
-        String author = scanner.nextLine();
-
-        list.add(new WiseSaying(lastId, content, author));
-
-        System.out.println(lastId + " 번 명업이 등록되었습니다.");
-        lastId++;
-        return lastId;
-    }
-
-    public void print(List<WiseSaying> list) {
-        System.out.println("번호 / 작가 / 명언");
-        System.out.println("-------------------");
-        for (WiseSaying wiseSaying : list.reversed()) {
-            System.out.println(wiseSaying.getId() + " / "
-                    + wiseSaying.getContent() + " / "
-                    + wiseSaying.getAutuor());
-        }
-    }
-
-    public int getLastId() {
-        return lastId;
-    }
-
-    public List<WiseSaying> getList() {
-        return list;
-    }
-
-    public void setLastId(int lastId) {
-        this.lastId = lastId;
+    public void makeTestData() {
+        service.add("즐길 수 없으면 피해라", "작자 미상");
+        service.add("행복해서 웃는 게 아니다... 웃어서 행복한 거다...", "작자 미상");
     }
 }
