@@ -8,38 +8,35 @@ public class Controller {
     //서비스로부터 받은 결과를 클라이언트에게 반환
 
     private final Scanner scanner;
-    private int lastNo;
-    private final List<WiseSaying> list;
+    private final Service service;
 
-    public Controller(Scanner scanner) {
+    public Controller(Scanner scanner, Service service) {
         this.scanner = scanner;
-        list = new ArrayList<>();
-        lastNo = 1;
+        this.service = service;
     }
 
-    public void write() {
+    public void actionWrite() {
         System.out.print("명언 : ");
         String content = scanner.nextLine();
         System.out.print("작가 : ");
         String author = scanner.nextLine();
 
-        list.add(new WiseSaying(lastNo, content, author));
+        service.write(content, author);
 
-        System.out.println(lastNo + "번 명언이 등록되었습니다.");
-        lastNo++;
+        System.out.println(service.getLastNo() + " 번 명언이 등록되었습니다.");
     }
 
-    public void print() {
+    public void actionPrint() {
         System.out.println("번호 / 명언 / 작가");
         System.out.println(" --------------------- ");
 
-/*      for (int i = list.size() - 1; i >= 0; i--) {
+        List<WiseSaying> list = service.getList();
+          /*      for (int i = list.size() - 1; i >= 0; i--) {
             WiseSaying wiseSaying = list.get(i);
             System.out.println(wiseSaying.getId() + " / " + wiseSaying.getContent() + " / " + wiseSaying.getAuthor());
                 }*/
         //컬렉션과 스트림으로 배열 역순 정렬
         Collections.reverse(list);
         list.forEach(wiseSaying -> System.out.println(wiseSaying.getId() + " / " + wiseSaying.getContent() + " / " + wiseSaying.getAuthor()));
-
     }
 }
