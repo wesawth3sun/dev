@@ -1,6 +1,6 @@
-package app;
+package app.standard;
 
-import app.domain.App;
+import app.App;
 import app.domain.wiseSaying.Controller;
 import app.domain.wiseSaying.Repository;
 import app.domain.wiseSaying.Service;

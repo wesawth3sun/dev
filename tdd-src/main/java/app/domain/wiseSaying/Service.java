@@ -24,7 +24,7 @@ public class Service {
     public void delete(WiseSaying wiseSaying) {
         repository.delete(wiseSaying);
     }
-    public WiseSaying getId(int id) {
+    public WiseSaying findById(int id) {
         return repository.getId(id);
     }
 

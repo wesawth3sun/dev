@@ -1,4 +1,4 @@
-package app.domain;
+package app;
 
 import app.domain.wiseSaying.Controller;
 
@@ -39,6 +39,7 @@ public class App {
                     break;
                 case "수정":
                     controller.actionModify(Integer.parseInt(split[1].substring(3)));
+                    break;
 
             }
         }

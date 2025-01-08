@@ -54,7 +54,7 @@ public class Controller {
     }
 
     public void actionModify(int id) {
-        WiseSaying wiseSaying = service.getId(id);
+        WiseSaying wiseSaying = service.findById(id);
         if (wiseSaying == null) {
             System.out.println(id + "번 명언은 존재하지 않습니다.");
             return;
@@ -69,7 +69,6 @@ public class Controller {
         String newAuthor = scanner.nextLine().trim();
 
         service.update(wiseSaying, newContent, newAuthor);
-        System.out.println(id + " 번 명언이 수정되었습니다.");
-
+        System.out.println(id + "번 명언이 수정되었습니다.");
     }
 }

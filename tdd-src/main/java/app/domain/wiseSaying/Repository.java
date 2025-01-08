@@ -37,6 +37,11 @@ public class Repository {
     }
 
     public WiseSaying getId(int id) {
-        return list.get(id);
+        for (WiseSaying wiseSaying : list) {
+            if (wiseSaying.getId() == id) {
+                return wiseSaying;
+            }
+        }
+        return null;
     }
 }

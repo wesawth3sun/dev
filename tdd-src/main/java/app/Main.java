@@ -1,4 +1,4 @@
-package app.domain;
+package app;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -39,7 +39,7 @@ public class Main {
         System.out.println(string3);
 
         // 테스트 봇 만들기
-        //app.domain.App app = new app.domain.App(scanner);
+        //app.App app = new app.App(scanner);
         //app.run();
     }
 

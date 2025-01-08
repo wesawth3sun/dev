@@ -24,14 +24,10 @@ public class WiseSaying {
     }
 
     public void setContent(String content) {
-        if (content != null && !content.isEmpty()) {
             this.content = content;
-        }
     }
 
     public void setAuthor(String author) {
-        if (author != null && !author.isEmpty()) {
             this.author = author;
-        }
     }
 }

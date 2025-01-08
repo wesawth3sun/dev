@@ -1,6 +1,6 @@
 package app.domian.wiseSaying;
 
-import app.TestBot;
+import app.standard.TestBot;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +15,7 @@ public class CotrollerTest {
 
     @Test
     void t2() {
-        //app.domain.App app = new app.domain.App();
+        //app.App app = new app.App();
         //String run = app.run();
 
         //aaa가 제대로 출력되는가? -> 이를 사람이 검증하지 않고 자동화 도구를 통해서 확인
@@ -159,6 +159,31 @@ public class CotrollerTest {
         assertThat(string).contains("1번 명언이 삭제되었습니다")
                 .contains("2 / 아는 것이 힝이다 / 작자 미상")
                 .doesNotContain("1 / 즐길 수 없다면 피해라 / 작자 미상")
+                .contains("1번 명언은 존재하지 않습니다.");
+
+    }
+
+    @Test
+    @DisplayName("수정 기능 구현")
+    void test12() {
+        String string = TestBot.run("""
+                등록
+                즐길 수 없다면 피해라
+                작자 미상
+                등록
+                아는 것이 힝이다
+                작자 미상
+                수정?id=1
+                졸려요
+                서니
+                목록
+                삭제?id=1
+                수정?id=1
+                """);
+
+        assertThat(string).contains("1번 명언이 수정되었습니다.")
+                .contains("1 / 졸려요 / 서니")
+                .contains("1번 명언이 삭제되었습니다")
                 .contains("1번 명언은 존재하지 않습니다.");
 
     }
