@@ -1,3 +1,7 @@
+package app.domain;
+
+import app.domain.wiseSaying.Controller;
+
 import java.util.Scanner;
 
 public class App {
@@ -17,19 +21,26 @@ public class App {
         while (true) {
             System.out.println("명령 ) ");
             String str = scanner.nextLine();
-            switch (str) {
+
+            String[] split = str.split("\\?");
+
+            switch (split[0]) {
                 case "종료":
                     System.out.println("명언앱을 종료합니다.");
-                    break;
+                    return;
                 case "등록":
                     controller.actionWrite();
+                    break;
                 case "목록":
                     controller.actionPrint();
-                default:
-                    System.out.println("다시 입력해 주세요.");
-                    return;
-            }
+                    break;
+                case "삭제":
+                    controller.actionDelete(Integer.parseInt(split[1].substring(3)));
+                    break;
+                case "수정":
+                    controller.actionModify(Integer.parseInt(split[1].substring(3)));
 
+            }
         }
     }
 }

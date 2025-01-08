@@ -1,3 +1,5 @@
+package app.domain.wiseSaying;
+
 public class WiseSaying {
     private int id; //명언 넘버
     private String content;

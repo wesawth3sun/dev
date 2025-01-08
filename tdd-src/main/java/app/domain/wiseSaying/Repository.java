@@ -1,3 +1,5 @@
+package app.domain.wiseSaying;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +16,11 @@ public class Repository {
         lastNo = 1;
     }
 
-    public void save(String content, String author) {
-        list.add(new WiseSaying(lastNo, content, author));
+    public WiseSaying save(String content, String author) {
+        WiseSaying wiseSaying = new WiseSaying(lastNo, content, author);
+        list.add(wiseSaying);
         lastNo++;
+        return wiseSaying;
     }
 
 
@@ -25,5 +29,14 @@ public class Repository {
     }
     public List<WiseSaying> getList() {
         return list;
+    }
+
+
+    public void delete(WiseSaying wiseSaying) {
+        list.remove(wiseSaying);
+    }
+
+    public WiseSaying getId(int id) {
+        return list.get(id);
     }
 }

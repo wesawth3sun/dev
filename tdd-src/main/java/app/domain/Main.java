@@ -1,3 +1,5 @@
+package app.domain;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -37,7 +39,7 @@ public class Main {
         System.out.println(string3);
 
         // 테스트 봇 만들기
-        //App app = new App(scanner);
+        //app.domain.App app = new app.domain.App(scanner);
         //app.run();
     }
 
