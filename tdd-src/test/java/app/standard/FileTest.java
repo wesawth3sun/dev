@@ -26,6 +26,7 @@ public class FileTest {
     void test2() {
         String file = "temp/test.txt";
         fileUtils.createFile(file);
+        fileUtils.write(file, "Hello, World!");
         assertThat(Files.exists(Paths.get(file))).isTrue();
     }
 

@@ -11,19 +11,7 @@ public class Util {
         }
 
         public static void createFile(String path) {
-            Path filePath = Paths.get(path);
-
-            try {
-                if (!Files.exists(filePath)) {
-                    Files.createFile(filePath);
-                    System.out.println("파일이 성공적으로 생성되었습니다.");
-                } else {
-                    System.out.println("파일이 이미 존재합니다.");
-                }
-            } catch (IOException e) {
-                System.out.println("파일 생성 실패");
-                e.printStackTrace();
-            }
+            write(path, "");
         }
 
         public static String readFile(String path) throws IOException {
@@ -41,7 +29,6 @@ public class Util {
                 System.out.println("파일 쓰기 실패");
                 e.printStackTrace();
             }
-
         }
 
         public static void delete(String file) {
