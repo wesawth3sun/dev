@@ -115,8 +115,18 @@ public class Util {
             for (Map.Entry<String, Object> entry : map.entrySet()) {
                 String key = entry.getKey();
                 Object value = entry.getValue();
-                sb.append(String.format("    \"%s\" : \"%s\"",key, value));
+                sb.append(String.format("    \"%s\" : ", key));
+                //key는 항상 String이니까 String.format 해도 상관없음
 
+                //키 포맷팅과 값 포맷팅을 분리
+                if (value instanceof String) {
+                    sb.append(String.format("\"%s\"", value));
+                } else if (value instanceof Number) {
+                    sb.append(value);
+                } else {
+                    //value의 타입이 예상치 못한 타입일 때 기본적인 문자열 처리를 제공
+                    sb.append("\"" + value + "\"");
+                }
                 if (++count < size) {
                     sb.append(",");
                 } //항목 처리 후 쉼표 추가, 마지막이면 쉼표 추가하지 않음
