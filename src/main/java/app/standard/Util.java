@@ -3,8 +3,11 @@ package app.standard;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.security.PublicKey;
+import java.sql.DataTruncation;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Util {
 
@@ -106,6 +109,25 @@ public class Util {
 
 
         public static String mapToJson(Map<String, Object> map) {
+
+            //return문은 mapToJson 메서드의 결과를 반환하기 위해 사용
+            //이 경우, 전체 스트림 연산의 결과가 메서드의 반환값
+            return map.entrySet().stream().map(entry -> {
+                String key = entry.getKey();
+                Object value = entry.getValue();
+                String formattedValue = (value instanceof String) ? String.format("\"%s\"", value) :
+                                (value instanceof Number) ? value.toString() : String.format("\"%s\"", value);
+                //(value instanceof String): 문자열인 경우 따옴표로 감쌈
+                //(value instanceof Number): 숫자인 경우 그대로 문자열로 변환
+                //그 외의 경우: 문자열로 변환하고 따옴표로 감쌈
+                return String.format("    \"%s\" : %s", key, formattedValue);})
+                    .collect(Collectors.joining(",\n", "{\n", "\n}"));
+                    //모든 키-값 쌍을 하나의 문자열로 결합
+                    //",\n": 각 키-값 쌍 사이에 쉼표와 줄바꿈을 삽입
+                    //"{\n": JSON 문자열의 시작
+                    //"\n}": JSON 문자열의 끝
+
+/*          기존에 짰던 코드
             StringBuilder sb = new StringBuilder();
             sb.append("{\n");
 
@@ -134,7 +156,7 @@ public class Util {
             }
             sb.append("}");
 
-            return sb.toString();
+            return sb.toString();*/
         }
     }
 }
