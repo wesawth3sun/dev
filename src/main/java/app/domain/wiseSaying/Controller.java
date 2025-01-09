@@ -29,7 +29,7 @@ public class Controller {
 
     public void actionPrint() {
         System.out.println("번호 / 명언 / 작가");
-        System.out.println(" --------------------- ");
+        System.out.println("----------------");
 
         List<WiseSaying> list = service.getList();
           /*      for (int i = list.size() - 1; i >= 0; i--) {

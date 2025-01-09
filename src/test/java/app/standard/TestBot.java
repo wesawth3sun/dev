@@ -1,9 +1,6 @@
 package app.standard;
 
 import app.App;
-import app.domain.wiseSaying.Controller;
-import app.domain.wiseSaying.Repository;
-import app.domain.wiseSaying.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

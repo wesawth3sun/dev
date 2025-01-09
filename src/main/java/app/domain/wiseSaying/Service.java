@@ -1,31 +1,35 @@
 package app.domain.wiseSaying;
 
+import app.domain.wiseSaying.repo.FileRepo;
+import app.domain.wiseSaying.repo.MemoryRepo;
+import app.domain.wiseSaying.repo.Repository;
+
 import java.util.List;
 
 public class Service {
     //비즈니스 로직
     //service 클래스에서는 입출력을 해서는 안 됨!!!
 
-    private final Repository repository;
+    private final Repository fileRepo;
 
 
     public Service() {
-        this.repository = new Repository();
+        this.fileRepo = new FileRepo();
     }
 
     public WiseSaying write(String content, String author) {
-        return repository.save(content, author);
+        return fileRepo.save(content, author);
     }
 
     public List<WiseSaying> getList() {
-        return repository.getList();
+        return fileRepo.getList();
     }
 
     public void delete(WiseSaying wiseSaying) {
-        repository.delete(wiseSaying);
+        fileRepo.delete(wiseSaying);
     }
     public WiseSaying findById(int id) {
-        return repository.getId(id);
+        return fileRepo.getId(id);
     }
 
     public void update(WiseSaying wiseSaying, String newContent, String newAuthor) {

@@ -1,9 +1,11 @@
-package app.domain.wiseSaying;
+package app.domain.wiseSaying.repo;
+
+import app.domain.wiseSaying.WiseSaying;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Repository {
+public class FileRepo implements Repository{
     //데이터베이스와의 직접적인 상호 작용
     //CRUD(Create, Read, Update, Delete) 작업 수행
     //저장소의 역할
@@ -11,9 +13,11 @@ public class Repository {
     private int lastNo;
     private final List<WiseSaying> list;
 
-    public Repository() {
+    public FileRepo() {
         this.list = new ArrayList<>();
         lastNo = 1;
+        System.out.println("파일 DB 사용");
+
     }
 
     public WiseSaying save(String content, String author) {
