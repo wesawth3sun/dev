@@ -3,12 +3,15 @@ package app.domian.wiseSaying.repository;
 import app.domain.wiseSaying.WiseSaying;
 import app.domain.wiseSaying.repo.FileRepo;
 import app.domain.wiseSaying.repo.Repository;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -19,6 +22,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class FileRepositoryTest {
 
     Repository repository = new FileRepo();
+
+/*    @AfterAll
+    @DisplayName("테스트 끝난 후 한 번만 실행")
+    static void afterAll() {
+        String filePath = "db";
+        fileUtils.deleteForce(filePath);
+    }
+    //테스트 끝난 후에 파일, 폴더 전부 지우기*/
+
 
     @Test
     @DisplayName("명언 저장")
@@ -39,19 +51,8 @@ public class FileRepositoryTest {
     }
 
     @Test
-    @DisplayName("명언 삭제")
-    void t2(){
-        WiseSaying wiseSaying = new WiseSaying(1, "aaa", "bbb");
-        repository.save(wiseSaying.getContent(), wiseSaying.getAuthor());
-        String filePath = "db/wiseSaying/1.json";
-        repository.deleteById(1);
-        boolean exists = Files.exists(Path.of(filePath));
-        assertThat(exists).isFalse();
-    }
-
-    @Test
     @DisplayName("명언 찾기")
-    void t3(){
+    void t3() {
         WiseSaying wiseSaying = new WiseSaying(1, "aaa", "bbb");
         repository.save(wiseSaying.getContent(), wiseSaying.getAuthor());
         String filePath = "db/wiseSaying/1.json";
@@ -65,5 +66,32 @@ public class FileRepositoryTest {
         //Optional이 비어있다면 (즉, WiseSaying 객체가 존재하지 않는다면) null을 반환
         assertThat(foundWiseSaying).isNotNull();
         assertThat(foundWiseSaying).isEqualTo(wiseSaying);
+    }
+
+    @Test
+    @DisplayName("명언 삭제")
+    void t2() {
+        WiseSaying wiseSaying = new WiseSaying(1, "aaa", "bbb");
+        repository.save(wiseSaying.getContent(), wiseSaying.getAuthor());
+        String filePath = "db/wiseSaying/1.json";
+        repository.deleteById(1);
+        boolean exists = Files.exists(Path.of(filePath));
+        assertThat(exists).isFalse();
+    }
+
+    @Test
+    @DisplayName("모든 명언 가져오기")
+    void t4() {
+        WiseSaying wiseSaying1 = new WiseSaying(1, "aaa", "bbb");
+        WiseSaying wiseSaying2 = new WiseSaying(2, "aaa2", "bbb2");
+        WiseSaying wiseSaying3 = new WiseSaying(3, "aaa3", "bbb3");
+
+        repository.save(wiseSaying1.getContent(), wiseSaying1.getAuthor());
+        repository.save(wiseSaying2.getContent(), wiseSaying2.getAuthor());
+        repository.save(wiseSaying3.getContent(), wiseSaying3.getAuthor());
+
+        List<WiseSaying> list = repository.getList();
+        assertThat(list).hasSize(3);
+        assertThat(list).contains(wiseSaying1, wiseSaying2, wiseSaying3);
     }
 }

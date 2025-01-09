@@ -42,7 +42,6 @@ public class WiseSaying {
     }
 
     public static WiseSaying mapToWise(Map<String, Object> map) {
-
         int id = (int) map.get("id");
         String content = String.valueOf(map.get("content"));
         String author = String.valueOf(map.get("author"));

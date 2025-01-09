@@ -5,10 +5,9 @@ import app.standard.Util;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.nio.file.Path;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static app.standard.Util.*;
 
@@ -18,10 +17,8 @@ public class FileRepo implements Repository{
     //저장소의 역할
 
     private int lastNo;
-    private final List<WiseSaying> list;
 
     public FileRepo() {
-        this.list = new ArrayList<>();
         lastNo = 1;
         System.out.println("파일 DB 사용");
 
@@ -35,7 +32,15 @@ public class FileRepo implements Repository{
     }
 
     public List<WiseSaying> getList() {
-        return list;
+        //파일들을 전체 다 가져오고, 하나씩 읽어서 list로 반환한다
+        String directory = "db/wiseSaying";
+        List<Map<String, Object>> jsonDataList = jsonUtils.readAllJsonFromDir(directory);
+        return jsonDataList.stream().map(map -> new WiseSaying(
+                ((Number) map.get("id")).intValue(),
+                (String) map.get("content"),
+                (String) map.get("author"))).collect(Collectors.toList());
+                //stream() 메서드와 map() 연산을 사용하면
+                //forEach를 사용하지 않고도 리스트의 각 요소를 변환할 수 있음
     }
 
 
@@ -59,12 +64,8 @@ public class FileRepo implements Repository{
     }
 
     public WiseSaying getId(int id) {
-        for (WiseSaying wiseSaying : list) {
-            if (wiseSaying.getId() == id) {
-                return wiseSaying;
-            }
-        }
-        return null;
+        return findById(id).orElse(null);
+        //orElse(null)를 사용하여 Optional 내부의 WiseSaying 객체를 추출
     }
 
 }

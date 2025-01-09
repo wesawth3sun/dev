@@ -3,6 +3,9 @@ package app.standard;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -116,19 +119,20 @@ public class Util {
             //return문은 mapToJson 메서드의 결과를 반환하기 위해 사용
             //이 경우, 전체 스트림 연산의 결과가 메서드의 반환값
             return map.entrySet().stream().map(entry -> {
-                String key = entry.getKey();
-                Object value = entry.getValue();
-                String formattedValue = (value instanceof String) ? String.format("\"%s\"", value) :
+                        String key = entry.getKey();
+                        Object value = entry.getValue();
+                        String formattedValue = (value instanceof String) ? String.format("\"%s\"", value) :
                                 (value instanceof Number) ? value.toString() : String.format("\"%s\"", value);
-                //(value instanceof String): 문자열인 경우 따옴표로 감쌈
-                //(value instanceof Number): 숫자인 경우 그대로 문자열로 변환
-                //그 외의 경우: 문자열로 변환하고 따옴표로 감쌈
-                return String.format("    \"%s\" : %s", key, formattedValue);})
+                        //(value instanceof String): 문자열인 경우 따옴표로 감쌈
+                        //(value instanceof Number): 숫자인 경우 그대로 문자열로 변환
+                        //그 외의 경우: 문자열로 변환하고 따옴표로 감쌈
+                        return String.format("    \"%s\" : %s", key, formattedValue);
+                    })
                     .collect(Collectors.joining(",\n", "{\n", "\n}"));
-                    //모든 키-값 쌍을 하나의 문자열로 결합
-                    //",\n": 각 키-값 쌍 사이에 쉼표와 줄바꿈을 삽입
-                    //"{\n": JSON 문자열의 시작
-                    //"\n}": JSON 문자열의 끝
+            //모든 키-값 쌍을 하나의 문자열로 결합
+            //",\n": 각 키-값 쌍 사이에 쉼표와 줄바꿈을 삽입
+            //"{\n": JSON 문자열의 시작
+            //"\n}": JSON 문자열의 끝
 
 /*          기존에 짰던 코드
             StringBuilder sb = new StringBuilder();
@@ -181,6 +185,30 @@ public class Util {
             String readString = Files.readString(Path.of(filePath));
             //readString을 사용하는 것이 더 효율적
             return readJsonToMap(readString);
+        }
+
+        //모든 명언 파일을 가져오는 메서드
+        public static List<Map<String, Object>> readAllJsonFromDir(String directory) {
+            List<Map<String, Object>> list = new ArrayList<>();
+            try {
+                Files.list(Path.of(directory)).filter(path -> path.toString().endsWith(".json"))
+                        //Files.list(): 지정된 디렉토리의 항목들(파일과 하위 디렉토리)을 나열
+                        //디렉토리 내용을 Stream<Path> 형태로 반환
+                        //Stream<Path>의 의미: 디렉토리 내의 각 항목(파일 또는 하위 디렉토리)이 Path 객체로 표현
+                        //이 Path 객체들의 "흐름"을 Stream으로 제공
+                        //Stream을 사용하면 각 Path에 대해 순차적으로 또는 병렬로 작업을 수행할 수 있음
+                        .forEach(path -> {
+                            try {
+                                Map<String, Object> map = readFileToMap(path.toString());
+                                list.add(map);
+                            } catch (IOException e) {
+                                System.err.println("파일 읽기 중 오류 발생: " + e.getMessage());
+                            }
+                        });
+            } catch (IOException e) {
+                System.err.println("디렉토리 읽기 중 오류 발생: " + e.getMessage());
+            }
+            return list;
         }
     }
 }
