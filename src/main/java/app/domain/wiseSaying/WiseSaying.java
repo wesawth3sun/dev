@@ -1,5 +1,10 @@
 package app.domain.wiseSaying;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
+
 public class WiseSaying {
     private int id; //명언 넘버
     private String content;
@@ -29,5 +34,13 @@ public class WiseSaying {
 
     public void setAuthor(String author) {
             this.author = author;
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("id", this.id);
+        map.put("content", this.content);
+        map.put("author", this.author);
+        return map;
     }
 }
