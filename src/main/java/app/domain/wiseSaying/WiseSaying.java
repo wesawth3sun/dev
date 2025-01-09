@@ -49,4 +49,16 @@ public class WiseSaying {
         return new WiseSaying(id, content, author);
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        WiseSaying that = (WiseSaying) object;
+        return id == that.id && Objects.equals(content, that.content) && Objects.equals(author, that.author);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, content, author);
+    }
 }

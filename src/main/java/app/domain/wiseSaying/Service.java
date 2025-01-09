@@ -4,6 +4,7 @@ import app.domain.wiseSaying.repo.FileRepo;
 import app.domain.wiseSaying.repo.MemoryRepo;
 import app.domain.wiseSaying.repo.Repository;
 
+import java.io.IOException;
 import java.util.List;
 
 public class Service {
@@ -17,7 +18,7 @@ public class Service {
         this.fileRepo = new FileRepo();
     }
 
-    public WiseSaying write(String content, String author) {
+    public WiseSaying write(String content, String author){
         return fileRepo.save(content, author);
     }
 
@@ -26,7 +27,7 @@ public class Service {
     }
 
     public void delete(WiseSaying wiseSaying) {
-        fileRepo.delete(wiseSaying);
+        fileRepo.deleteById(wiseSaying.getId());
     }
     public WiseSaying findById(int id) {
         return fileRepo.getId(id);

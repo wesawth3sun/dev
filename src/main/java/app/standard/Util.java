@@ -3,11 +3,9 @@ package app.standard;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import app.domain.wiseSaying.WiseSaying;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -111,6 +109,7 @@ public class Util {
         private static final ObjectMapper objectMapper = new ObjectMapper();
         //ObjectMapper 클래스를 사용하여 JSON 처리를 담당
 
+        //wise -> map -> json(sting) -> file 변환
 
         public static String mapToJson(Map<String, Object> map) {
 

@@ -1,5 +1,6 @@
 package app.domain.wiseSaying;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -16,7 +17,7 @@ public class Controller {
         this.service = new Service();
     }
 
-    public void actionWrite() {
+    public void actionWrite(){
         System.out.print("명언 : ");
         String content = scanner.nextLine();
         System.out.print("작가 : ");

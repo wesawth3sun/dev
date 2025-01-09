@@ -2,6 +2,7 @@ package app;
 
 import app.domain.wiseSaying.Controller;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class App {
@@ -15,7 +16,7 @@ public class App {
         this.controller = new Controller(this.scanner);
     }
 
-    public void run() {
+    public void run(){
         System.out.println("== 명언 앱 ==");
 
         while (true) {

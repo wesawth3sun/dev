@@ -1,9 +1,16 @@
 package app.domain.wiseSaying.repo;
 
 import app.domain.wiseSaying.WiseSaying;
+import app.standard.Util;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import static app.standard.Util.*;
 
 public class FileRepo implements Repository{
     //데이터베이스와의 직접적인 상호 작용
@@ -22,22 +29,33 @@ public class FileRepo implements Repository{
 
     public WiseSaying save(String content, String author) {
         WiseSaying wiseSaying = new WiseSaying(lastNo, content, author);
-        list.add(wiseSaying);
+        jsonUtils.writeMapToFile("db/wiseSaying/%d.json".formatted(wiseSaying.getId()), wiseSaying.toMap());
         lastNo++;
         return wiseSaying;
     }
 
-
-    public int getLastNo() {
-        return lastNo;
-    }
     public List<WiseSaying> getList() {
         return list;
     }
 
 
-    public void delete(WiseSaying wiseSaying) {
-        list.remove(wiseSaying);
+    public void deleteById(int id) {
+        fileUtils.delete("db/wiseSaying/%d.json".formatted(id));
+    }
+
+    @Override
+    public Optional<WiseSaying> findById(int id) {
+        String path = "db/wiseSaying/%d.json".formatted(id);
+        try {
+            Map<String, Object> map = jsonUtils.readFileToMap(path);
+            if (map != null && !map.isEmpty()) {
+                WiseSaying wiseSaying = WiseSaying.mapToWise(map);
+                return Optional.of(wiseSaying);
+            }
+        } catch (IOException e) {
+            System.err.println("파일 읽기 중 오류 발생: " + e.getMessage());
+        }
+        return Optional.empty();
     }
 
     public WiseSaying getId(int id) {
@@ -48,4 +66,5 @@ public class FileRepo implements Repository{
         }
         return null;
     }
+
 }

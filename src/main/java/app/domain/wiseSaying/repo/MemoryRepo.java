@@ -4,6 +4,7 @@ import app.domain.wiseSaying.WiseSaying;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class MemoryRepo implements Repository{
     //데이터베이스와의 직접적인 상호 작용
@@ -42,5 +43,15 @@ public class MemoryRepo implements Repository{
             }
         }
         return null;
+    }
+
+    @Override
+    public void deleteById(int i) {
+
+    }
+
+    @Override
+    public Optional<WiseSaying> findById(int i) {
+        return Optional.empty();
     }
 }
