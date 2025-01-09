@@ -10,16 +10,16 @@ public class App {
     private final Scanner scanner;
     private final Controller controller;
 
-    public App(Scanner scanner, Controller controller) {
+    public App(Scanner scanner) {
         this.scanner = scanner;
-        this.controller = controller;
+        this.controller = new Controller(this.scanner);
     }
 
     public void run() {
         System.out.println("== 명언 앱 ==");
 
         while (true) {
-            System.out.println("명령 ) ");
+            System.out.print("명령 ) ");
             String str = scanner.nextLine();
 
             String[] split = str.split("\\?");

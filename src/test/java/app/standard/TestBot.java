@@ -19,11 +19,7 @@ public class TestBot {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
-        Repository repository = new Repository();
-        Service service = new Service(repository);
-        Controller controller = new Controller(scanner, service);
-
-        App app = new App(scanner, controller);
+        App app = new App(scanner);
         app.run();
 
         return out.toString();

@@ -3,11 +3,13 @@ package app.standard;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.security.PublicKey;
-import java.sql.DataTruncation;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
+
+import app.domain.wiseSaying.WiseSaying;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Util {
 
@@ -106,6 +108,8 @@ public class Util {
     }
 
     public static class jsonUtils {
+        private static final ObjectMapper objectMapper = new ObjectMapper();
+        //ObjectMapper 클래스를 사용하여 JSON 처리를 담당
 
 
         public static String mapToJson(Map<String, Object> map) {
@@ -157,6 +161,27 @@ public class Util {
             sb.append("}");
 
             return sb.toString();*/
+        }
+        //map을 넘기면 파일로 저장해 주는 역할
+
+        public static void writeMapToFile(String filePath, Map<String, Object> map) {
+            String jsonString = mapToJson(map);
+            fileUtils.write(filePath, jsonString);
+        }
+
+        //json을 읽어서 map으로 변환할 수 있게끔 함
+        public static Map<String, Object> readJsonToMap(String jsonString) throws IOException {
+            return objectMapper.readValue(jsonString, new TypeReference<Map<String, Object>>() {
+                //objectMapper.readValue(): 사용하여 JSON 문자열을 파싱하고 Map으로 변환
+                //TypeReference를 사용하여 변환할 타입을 Map<String, Object>로 지정
+            });
+        }
+
+        //파일명을 넘기면 이를 읽어서 map으로 반환해 주는
+        public static Map<String, Object> readFileToMap(String filePath) throws IOException {
+            String readString = Files.readString(Path.of(filePath));
+            //readString을 사용하는 것이 더 효율적
+            return readJsonToMap(readString);
         }
     }
 }

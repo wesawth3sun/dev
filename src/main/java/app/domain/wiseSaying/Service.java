@@ -9,8 +9,8 @@ public class Service {
     private final Repository repository;
 
 
-    public Service(Repository repository) {
-        this.repository = repository;
+    public Service() {
+        this.repository = new Repository();
     }
 
     public WiseSaying write(String content, String author) {

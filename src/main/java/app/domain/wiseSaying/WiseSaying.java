@@ -1,9 +1,6 @@
 package app.domain.wiseSaying;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class WiseSaying {
     private int id; //명언 넘버
@@ -43,4 +40,13 @@ public class WiseSaying {
         map.put("author", this.author);
         return map;
     }
+
+    public static WiseSaying mapToWise(Map<String, Object> map) {
+
+        int id = (int) map.get("id");
+        String content = String.valueOf(map.get("content"));
+        String author = String.valueOf(map.get("author"));
+        return new WiseSaying(id, content, author);
+    }
+
 }

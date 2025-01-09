@@ -11,9 +11,9 @@ public class Controller {
     private final Scanner scanner;
     private final Service service;
 
-    public Controller(Scanner scanner, Service service) {
+    public Controller(Scanner scanner) {
         this.scanner = scanner;
-        this.service = service;
+        this.service = new Service();
     }
 
     public void actionWrite() {
