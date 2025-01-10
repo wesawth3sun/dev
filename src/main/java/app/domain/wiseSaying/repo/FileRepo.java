@@ -1,11 +1,8 @@
 package app.domain.wiseSaying.repo;
 
 import app.domain.wiseSaying.WiseSaying;
-import app.standard.Util;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -15,6 +12,8 @@ public class FileRepo implements Repository{
     //데이터베이스와의 직접적인 상호 작용
     //CRUD(Create, Read, Update, Delete) 작업 수행
     //저장소의 역할
+
+    private static final String BUILD_PATH = "db/wiseSaying/build/data.json";
 
     private int lastNo;
 
@@ -65,6 +64,19 @@ public class FileRepo implements Repository{
     public WiseSaying getId(int id) {
         return findById(id).orElse(null);
         //orElse(null)를 사용하여 Optional 내부의 WiseSaying 객체를 추출
+    }
+
+    public void build() {
+        List<Map<String, Object>> mapList = getList().stream()
+                .map(WiseSaying::toMap)
+                .toList();
+        String jsonString = jsonUtils.listToJson(mapList);
+        fileUtils.write(BUILD_PATH, jsonString);
+    }
+
+    @Override
+    public String getBuildPath() {
+        return BUILD_PATH;
     }
 
 

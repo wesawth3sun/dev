@@ -94,4 +94,32 @@ public class FileRepositoryTest {
         assertThat(list).hasSize(3);
         assertThat(list).contains(wiseSaying1, wiseSaying2, wiseSaying3);
     }
+
+    @Test
+    @DisplayName("build 하면 모든 명언을 하나로 모아 저장")
+    void t5() throws IOException {
+        WiseSaying wiseSaying1 = new WiseSaying(1, "aaa", "bbb");
+        WiseSaying wiseSaying2 = new WiseSaying(2, "CCC", "DDD");
+        repository.save(wiseSaying1.getContent(), wiseSaying1.getAuthor());
+        repository.save(wiseSaying2.getContent(), wiseSaying2.getAuthor());
+
+        repository.build();
+
+        String jsonString = fileUtils.readFile(repository.getBuildPath());
+
+        assertThat(jsonString).isEqualTo("""
+            [
+            {
+                "id" : 1,
+                "content" : "aaa",
+                "author" : "bbb"
+            },
+            {
+                "id" : 2,
+                "content" : "CCC",
+                "author" : "DDD"
+            }
+            ]""");
+    }
+
 }

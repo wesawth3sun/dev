@@ -1,15 +1,19 @@
 package app.domain.wiseSaying.repo;
 
 import app.domain.wiseSaying.WiseSaying;
+import app.standard.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static app.standard.Util.*;
+
 public class MemoryRepo implements Repository{
     //데이터베이스와의 직접적인 상호 작용
     //CRUD(Create, Read, Update, Delete) 작업 수행
     //저장소의 역할
+
 
     private int lastNo;
     private final List<WiseSaying> list;
@@ -29,6 +33,11 @@ public class MemoryRepo implements Repository{
 
     public List<WiseSaying> getList() {
         return list;
+    }
+
+    @Override
+    public Optional<WiseSaying> findById(int id) {
+        return Optional.empty();
     }
 
 
@@ -51,7 +60,11 @@ public class MemoryRepo implements Repository{
     }
 
     @Override
-    public Optional<WiseSaying> findById(int i) {
-        return Optional.empty();
+    public void build() {
+    }
+
+    @Override
+    public String getBuildPath() {
+        return "";
     }
 }
