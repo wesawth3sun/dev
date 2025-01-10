@@ -187,4 +187,13 @@ public class CotrollerTest {
                 .contains("1번 명언은 존재하지 않습니다.");
 
     }
+
+    @Test
+    @DisplayName("목록 - 명언이 없을 때")
+    void t13() {
+        String string = TestBot.run("""
+                목록
+                """);
+        assertThat(string).contains("등록된 명언이 없습니다.");
+    }
 }

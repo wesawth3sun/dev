@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import static app.standard.Util.*;
@@ -43,7 +45,7 @@ public class JsonTest {
     }
 
     @Test
-    @DisplayName("Map을 json으로 변환, 속성이 두 개")
+    @DisplayName("Map을 json으로 변환, 속성이 세 개, 숫자도 저장될 수 있게 한다")
     void t3() {
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("name", "홍길동");
@@ -73,7 +75,7 @@ public class JsonTest {
     }
 
     @Test
-    @DisplayName("WiseSaying을 Map으로 변환 -> Json 으로 변환")
+    @DisplayName("WiseSaying을 Map으로 변환 -> Json 으로 변환한 것을 파일로 저장")
     void t5() throws IOException {
         WiseSaying wiseSaying = new WiseSaying(1, "aaa", "bbb");
         Map<String, Object> map = wiseSaying.toMap();
@@ -130,6 +132,41 @@ public class JsonTest {
         assertThat(wiseSaying.getId()).isEqualTo(1);
         assertThat(wiseSaying.getContent()).isEqualTo("aaa");
         assertThat(wiseSaying.getAuthor()).isEqualTo("bbb");
+    }
+
+    @Test
+    @DisplayName("wiseSaying list를 json 문자열로 변환")
+    void t9() {
+        WiseSaying wiseSaying1 = new WiseSaying(1, "aaa", "bbb");
+        WiseSaying wiseSaying2 = new WiseSaying(2, "CCC", "DDD");
+
+        List<WiseSaying> wiseSayings = new LinkedList<>();
+        wiseSayings.add(wiseSaying1);
+        wiseSayings.add(wiseSaying2);
+
+        List<Map<String, Object>> mapList = wiseSayings.stream()
+                .map(WiseSaying::toMap)
+                .toList();
+
+        String jsonString = jsonUtils.listToJson(mapList);
+
+        assertThat(jsonString).isEqualTo("""
+                [
+                {
+                    "id" : 1,
+                    "content" : "aaa",
+                    "author" : "bbb"
+                },
+                {
+                    "id" : 2,
+                    "content" : "CCC",
+                    "author" : "DDD"
+                }
+                ]
+                """.stripIndent().trim());
+        //stripIndent(): 여러 줄 문자열(텍스트 블록)의 공통된 선행 공백(들여쓰기)을 제거
+        //trim(): 문자열의 시작과 끝에서 공백을 제거
+        //텍스트 블록의 들여쓰기를 제거하고 추가로 남아있을 수 있는 앞뒤 공백까지 깔끔하게 정리
     }
 }
 

@@ -33,6 +33,10 @@ public class Controller {
         System.out.println("----------------");
 
         List<WiseSaying> list = service.getList();
+        if (list.isEmpty()) {
+            System.out.println("등록된 명언이 없습니다.");
+            return;
+        }
           /*      for (int i = list.size() - 1; i >= 0; i--) {
             app.inside.WiseSaying wiseSaying = list.get(i);
             System.out.println(wiseSaying.getId() + " / " + wiseSaying.getContent() + " / " + wiseSaying.getAuthor());

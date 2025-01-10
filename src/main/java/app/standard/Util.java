@@ -32,9 +32,10 @@ public class Util {
         public static void write(String path, String content) {
             Path filePath = Paths.get(path);
             //그냥 문자열은 안 들어가기 때문에 꼭 path 로 변환해 주기
-
             try {
                 Files.createDirectories(filePath.getParent());
+                //주어진 파일 경로의 부모 디렉토리 경로를 얻음
+                //부모 경로에 존재하지 않는 모든 디렉토리를 생성
                 Files.writeString(filePath, content, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             } catch (IOException e) {
                 System.out.println("파일 쓰기 실패");
@@ -131,69 +132,45 @@ public class Util {
                     .collect(Collectors.joining(",\n", "{\n", "\n}"));
             //모든 키-값 쌍을 하나의 문자열로 결합
             //",\n": 각 키-값 쌍 사이에 쉼표와 줄바꿈을 삽입
-            //"{\n": JSON 문자열의 시작
-            //"\n}": JSON 문자열의 끝
-
-/*          기존에 짰던 코드
-            StringBuilder sb = new StringBuilder();
-            sb.append("{\n");
-
-            int size = map.size();
-            int count = 0;
-
-            for (Map.Entry<String, Object> entry : map.entrySet()) {
-                String key = entry.getKey();
-                Object value = entry.getValue();
-                sb.append(String.format("    \"%s\" : ", key));
-                //key는 항상 String이니까 String.format 해도 상관없음
-
-                //키 포맷팅과 값 포맷팅을 분리
-                if (value instanceof String) {
-                    sb.append(String.format("\"%s\"", value));
-                } else if (value instanceof Number) {
-                    sb.append(value);
-                } else {
-                    //value의 타입이 예상치 못한 타입일 때 기본적인 문자열 처리를 제공
-                    sb.append("\"" + value + "\"");
-                }
-                if (++count < size) {
-                    sb.append(",");
-                } //항목 처리 후 쉼표 추가, 마지막이면 쉼표 추가하지 않음
-                sb.append("\n");
-            }
-            sb.append("}");
-
-            return sb.toString();*/
         }
+
+
         //map을 넘기면 파일로 저장해 주는 역할
+        public static String listToJson(List<Map<String, Object>> mapList) {
+            return mapList.stream()
+                    .map(jsonUtils::mapToJson)
+                    .collect(Collectors.joining(",\n", "[\n", "\n]"));
+        }
 
         public static void writeMapToFile(String filePath, Map<String, Object> map) {
             String jsonString = mapToJson(map);
             fileUtils.write(filePath, jsonString);
         }
-
         //json을 읽어서 map으로 변환할 수 있게끔 함
+
         public static Map<String, Object> readJsonToMap(String jsonString) throws IOException {
             return objectMapper.readValue(jsonString, new TypeReference<Map<String, Object>>() {
                 //objectMapper.readValue(): 사용하여 JSON 문자열을 파싱하고 Map으로 변환
                 //TypeReference를 사용하여 변환할 타입을 Map<String, Object>로 지정
             });
         }
-
         //파일명을 넘기면 이를 읽어서 map으로 반환해 주는
+
         public static Map<String, Object> readFileToMap(String filePath) throws IOException {
             String readString = Files.readString(Path.of(filePath));
             //readString을 사용하는 것이 더 효율적
             return readJsonToMap(readString);
         }
-
         //모든 명언 파일을 가져오는 메서드
+
         public static List<Map<String, Object>> readAllJsonFromDir(String directory) {
             List<Map<String, Object>> list = new ArrayList<>();
             try {
                 Files.list(Path.of(directory)).filter(path -> path.toString().endsWith(".json"))
                         //Files.list(): 지정된 디렉토리의 항목들(파일과 하위 디렉토리)을 나열
                         //디렉토리 내용을 Stream<Path> 형태로 반환
+                        //Files.list() 메서드가 Stream<Path>를 직접 반환하기 때문에 추가로 .stream()을 호출할 필요가 없음!
+                        //추가 호출 없이도 stream의 메서드를 사용할 수 있다
                         //Stream<Path>의 의미: 디렉토리 내의 각 항목(파일 또는 하위 디렉토리)이 Path 객체로 표현
                         //이 Path 객체들의 "흐름"을 Stream으로 제공
                         //Stream을 사용하면 각 Path에 대해 순차적으로 또는 병렬로 작업을 수행할 수 있음
@@ -201,6 +178,7 @@ public class Util {
                             try {
                                 Map<String, Object> map = readFileToMap(path.toString());
                                 list.add(map);
+                                //블록 람다식 사용했지만 void 반환: 반환값이 없는 경우(void), return 문을 사용하지 않음
                             } catch (IOException e) {
                                 System.err.println("파일 읽기 중 오류 발생: " + e.getMessage());
                             }

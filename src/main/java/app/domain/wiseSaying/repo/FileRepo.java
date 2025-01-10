@@ -39,8 +39,7 @@ public class FileRepo implements Repository{
                 ((Number) map.get("id")).intValue(),
                 (String) map.get("content"),
                 (String) map.get("author"))).collect(Collectors.toList());
-                //stream() 메서드와 map() 연산을 사용하면
-                //forEach를 사용하지 않고도 리스트의 각 요소를 변환할 수 있음
+                //Stream API의 대부분의 연산들은 forEach를 명시적으로 사용하지 않아도 스트림의 각 요소를 하나씩 처리
     }
 
 
@@ -67,5 +66,6 @@ public class FileRepo implements Repository{
         return findById(id).orElse(null);
         //orElse(null)를 사용하여 Optional 내부의 WiseSaying 객체를 추출
     }
+
 
 }
