@@ -80,4 +80,22 @@ public class Controller {
     public void actionBuild() {
         service.build();
     }
+
+    public void actionSearch(String keywordType, String keyword) {
+        List<WiseSaying> search = service.search(keywordType, keyword);
+        System.out.println("----------------");
+        System.out.println("검색 타입: " + keywordType);
+        System.out.println("검색어: " + keyword);
+        System.out.println("번호 / 작가 / 명언");
+        System.out.println("----------------");
+
+        if (search.isEmpty()) {
+            System.out.println("검색 결과가 없습니다.");
+        } else {
+            for (WiseSaying wiseSaying : search) {
+                System.out.printf("%d / %s / %s\n", wiseSaying.getId()
+                        , wiseSaying.getAuthor(), wiseSaying.getContent());
+            }
+        }
+    }
 }

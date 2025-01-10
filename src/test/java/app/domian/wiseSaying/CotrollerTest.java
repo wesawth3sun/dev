@@ -220,4 +220,21 @@ public class CotrollerTest {
 
         assertThat(Files.exists(Path.of(repository.getBuildPath()))).isTrue();
     }
+
+    @Test
+    @DisplayName("검색 기능 구현")
+    void t15() {
+        String string = TestBot.run("""
+                등록
+                즐길 수 없다면 피해라
+                작자 미상
+                등록
+                아는 것이 힝이다
+                작자 미상
+                목록?keywordType=content&keyword=아는
+                """);
+        assertThat(string)
+                .contains("2 / 작자 미상 / 아는 것이 힝이다")
+                .doesNotContain("1 / 작자 미상 / 즐길 수 없다면 피해라");
+    }
 }

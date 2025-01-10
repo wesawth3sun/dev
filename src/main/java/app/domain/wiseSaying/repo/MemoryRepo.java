@@ -1,13 +1,10 @@
 package app.domain.wiseSaying.repo;
 
 import app.domain.wiseSaying.WiseSaying;
-import app.standard.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static app.standard.Util.*;
 
 public class MemoryRepo implements Repository{
     //데이터베이스와의 직접적인 상호 작용
@@ -66,5 +63,10 @@ public class MemoryRepo implements Repository{
     @Override
     public String getBuildPath() {
         return "";
+    }
+
+    @Override
+    public List<WiseSaying> search(String keywordType, String keyword) {
+        return null;
     }
 }

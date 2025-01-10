@@ -79,5 +79,17 @@ public class FileRepo implements Repository{
         return BUILD_PATH;
     }
 
+    public List<WiseSaying> search (String keywordType, String keyword) {
+        return getList().stream()
+                .filter(wiseSaying -> {
+                    if ("content".equals(keywordType)) {
+                        return wiseSaying.getContent().contains(keyword);
+                    } else if ("author".equals(keywordType)) {
+                        return wiseSaying.getAuthor().contains(keyword);
+                    }
+                    return false;
+                }).collect(Collectors.toList());
+    }
+
 
 }

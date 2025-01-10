@@ -1,5 +1,6 @@
 package app;
 
+import app.domain.wiseSaying.Command;
 import app.domain.wiseSaying.Controller;
 
 import java.io.IOException;
@@ -22,10 +23,10 @@ public class App {
         while (true) {
             System.out.print("명령 ) ");
             String str = scanner.nextLine();
-
             String[] split = str.split("\\?");
+            Command command = new Command(str);
 
-            switch (split[0]) {
+            switch (command.getCommand()) {
                 case "종료":
                     System.out.println("명언앱을 종료합니다.");
                     return;
@@ -33,7 +34,13 @@ public class App {
                     controller.actionWrite();
                     break;
                 case "목록":
-                    controller.actionPrint();
+                    if (command.hasParam("keywordType") && command.hasParam("keyword")) {
+                        String keywordType = command.getParam("keywordType");
+                        String keyword = command.getParam("keyword");
+                        controller.actionSearch(keywordType, keyword);
+                    } else {
+                        controller.actionPrint();
+                    }
                     break;
                 case "삭제":
                     controller.actionDelete(Integer.parseInt(split[1].substring(3)));
@@ -43,7 +50,6 @@ public class App {
                     break;
                 case "빌드":
                     controller.actionBuild();
-
             }
         }
     }

@@ -43,4 +43,8 @@ public class Service {
     public void build() {
         fileRepo.build();
     }
+
+    public List<WiseSaying> search(String keywordType, String keyword) {
+        return fileRepo.search(keywordType, keyword);
+    }
 }
