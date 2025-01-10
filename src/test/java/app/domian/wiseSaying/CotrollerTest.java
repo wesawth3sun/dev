@@ -237,4 +237,16 @@ public class CotrollerTest {
                 .contains("2 / 작자 미상 / 아는 것이 힝이다")
                 .doesNotContain("1 / 작자 미상 / 즐길 수 없다면 피해라");
     }
+
+    @Test
+    @DisplayName("검색 기능 구현")
+    void t16() {
+        TestBot.makeSample(10);
+        String string = TestBot.run("""
+                목록
+                """);
+        assertThat(string)
+                .contains("1 / 명언1 / 작가1")
+                .contains("10 / 명언10 / 작가10");
+    }
 }

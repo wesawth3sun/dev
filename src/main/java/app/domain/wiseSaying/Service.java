@@ -1,7 +1,6 @@
 package app.domain.wiseSaying;
 
 import app.domain.wiseSaying.repo.FileRepo;
-import app.domain.wiseSaying.repo.MemoryRepo;
 import app.domain.wiseSaying.repo.Repository;
 
 import java.io.IOException;
@@ -46,5 +45,9 @@ public class Service {
 
     public List<WiseSaying> search(String keywordType, String keyword) {
         return fileRepo.search(keywordType, keyword);
+    }
+
+    public void makeSampleData(int sampleCount) {
+        fileRepo.makeSampleData(sampleCount);
     }
 }

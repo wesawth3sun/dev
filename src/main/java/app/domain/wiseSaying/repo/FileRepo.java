@@ -91,5 +91,12 @@ public class FileRepo implements Repository{
                 }).collect(Collectors.toList());
     }
 
+    @Override
+    public void makeSampleData(int sampleCount) {
+        for (int i = 1; i <= sampleCount; i++) {
+            save("명언" + i, "작가" + i);
+        }
+    }
+
 
 }

@@ -53,5 +53,9 @@ public class App {
             }
         }
     }
+
+    public void makeSampleData(int sampleCount) {
+        controller.makeSampleData(sampleCount);
+    }
 }
 

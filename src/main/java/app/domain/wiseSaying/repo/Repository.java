@@ -16,4 +16,5 @@ public interface Repository {
     String getBuildPath();
 
     List<WiseSaying> search(String keywordType, String keyword);
+    void makeSampleData(int sampleCount);
 }

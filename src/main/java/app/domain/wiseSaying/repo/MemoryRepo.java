@@ -1,3 +1,4 @@
+/*
 package app.domain.wiseSaying.repo;
 
 import app.domain.wiseSaying.WiseSaying;
@@ -50,23 +51,5 @@ public class MemoryRepo implements Repository{
         }
         return null;
     }
-
-    @Override
-    public void deleteById(int i) {
-
-    }
-
-    @Override
-    public void build() {
-    }
-
-    @Override
-    public String getBuildPath() {
-        return "";
-    }
-
-    @Override
-    public List<WiseSaying> search(String keywordType, String keyword) {
-        return null;
-    }
 }
+*/

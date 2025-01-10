@@ -21,4 +21,10 @@ public class TestBot {
 
         return out.toString();
     }
+
+    public static void makeSample(int sampleCount) {
+        App app = new App(null);
+        app.makeSampleData(sampleCount);
+    }
+    //샘플 데이터 만들기용
 }

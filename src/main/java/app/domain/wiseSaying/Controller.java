@@ -98,4 +98,8 @@ public class Controller {
             }
         }
     }
+
+    public void makeSampleData(int sampleCount) {
+        service.makeSampleData(sampleCount);
+    }
 }
