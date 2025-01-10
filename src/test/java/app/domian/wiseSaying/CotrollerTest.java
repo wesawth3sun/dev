@@ -1,12 +1,20 @@
 package app.domian.wiseSaying;
 
+import app.domain.wiseSaying.repo.FileRepo;
+import app.domain.wiseSaying.repo.Repository;
 import app.standard.TestBot;
+import app.standard.Util;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CotrollerTest {
+
+    Repository repository = new FileRepo();
 
     @Test
     void t1() {
@@ -195,5 +203,21 @@ public class CotrollerTest {
                 목록
                 """);
         assertThat(string).contains("등록된 명언이 없습니다.");
+    }
+
+    @Test
+    @DisplayName("빌드")
+    void t14() {
+        String string = TestBot.run("""
+                등록
+                즐길 수 없다면 피해라
+                작자 미상
+                등록
+                아는 것이 힝이다
+                작자 미상
+                빌드
+                """);
+
+        assertThat(Files.exists(Path.of(repository.getBuildPath()))).isTrue();
     }
 }

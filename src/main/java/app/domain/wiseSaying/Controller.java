@@ -76,4 +76,8 @@ public class Controller {
         service.update(wiseSaying, newContent, newAuthor);
         System.out.println(id + "번 명언이 수정되었습니다.");
     }
+
+    public void actionBuild() {
+        service.build();
+    }
 }

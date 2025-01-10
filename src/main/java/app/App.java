@@ -41,6 +41,8 @@ public class App {
                 case "수정":
                     controller.actionModify(Integer.parseInt(split[1].substring(3)));
                     break;
+                case "빌드":
+                    controller.actionBuild();
 
             }
         }

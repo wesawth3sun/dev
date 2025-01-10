@@ -39,4 +39,8 @@ public class Service {
         //비즈니스 로직
         //기존의 것을 다른 것으로 교체, list에 저장하는 것은 아님
     }
+
+    public void build() {
+        fileRepo.build();
+    }
 }
