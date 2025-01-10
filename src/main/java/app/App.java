@@ -34,13 +34,7 @@ public class App {
                     controller.actionWrite();
                     break;
                 case "목록":
-                    if (command.hasParam("keywordType") && command.hasParam("keyword")) {
-                        String keywordType = command.getParam("keywordType");
-                        String keyword = command.getParam("keyword");
-                        controller.actionSearch(keywordType, keyword);
-                    } else {
-                        controller.actionPrint();
-                    }
+                    controller.actionList(command);
                     break;
                 case "삭제":
                     controller.actionDelete(Integer.parseInt(split[1].substring(3)));

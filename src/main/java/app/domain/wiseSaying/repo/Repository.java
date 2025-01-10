@@ -14,7 +14,7 @@ public interface Repository {
     void deleteById(int i);
     void build();
     String getBuildPath();
-
     List<WiseSaying> search(String keywordType, String keyword);
     void makeSampleData(int sampleCount);
+    int count();
 }

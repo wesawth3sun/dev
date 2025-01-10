@@ -234,8 +234,8 @@ public class CotrollerTest {
                 목록?keywordType=content&keyword=아는
                 """);
         assertThat(string)
-                .contains("2 / 작자 미상 / 아는 것이 힝이다")
-                .doesNotContain("1 / 작자 미상 / 즐길 수 없다면 피해라");
+                .contains("2 / 아는 것이 힝이다 / 작자 미상")
+                .doesNotContain("1 / 즐길 수 없다면 피해라 / 작자 미상");
     }
 
     @Test
@@ -249,4 +249,16 @@ public class CotrollerTest {
                 .contains("1 / 명언1 / 작가1")
                 .contains("10 / 명언10 / 작가10");
     }
+
+    @Test
+    @DisplayName("페이징 - 페이징 UI 출력")
+    void t17() {
+        TestBot.makeSample(10);
+        String string = TestBot.run("""
+                목록
+                """);
+        assertThat(string).contains("[1] / 2");
+    }
+
+
 }

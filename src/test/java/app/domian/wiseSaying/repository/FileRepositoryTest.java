@@ -122,4 +122,19 @@ public class FileRepositoryTest {
             ]""");
     }
 
+
+    @Test
+    @DisplayName("현재 저장된 명언의 개수를 가져오는 count")
+    void t6() {
+        WiseSaying wiseSaying1 = new WiseSaying(1, "aaa", "bbb");
+        WiseSaying wiseSaying2 = new WiseSaying(2, "CCC", "DDD");
+        repository.save(wiseSaying1.getContent(), wiseSaying1.getAuthor());
+        repository.save(wiseSaying2.getContent(), wiseSaying2.getAuthor());
+
+        int count = repository.count();
+
+        assertThat(count).isEqualTo(2);
+
+    }
+
 }

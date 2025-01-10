@@ -98,5 +98,10 @@ public class FileRepo implements Repository{
         }
     }
 
+    @Override
+    public int count() {
+        return getList().size();
+    }
+
 
 }

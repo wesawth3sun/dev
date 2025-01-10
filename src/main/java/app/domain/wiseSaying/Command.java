@@ -33,5 +33,6 @@ public class Command {
     public boolean hasParam(String key) {
         return map.containsKey(key);
     }
+
 }
 

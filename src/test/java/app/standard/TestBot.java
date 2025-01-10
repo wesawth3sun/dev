@@ -27,4 +27,5 @@ public class TestBot {
         app.makeSampleData(sampleCount);
     }
     //샘플 데이터 만들기용
+
 }
